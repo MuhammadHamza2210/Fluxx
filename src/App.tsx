@@ -4,6 +4,7 @@ import { Activity } from 'lucide-react'
 import Sidebar from './components/Sidebar'
 import Topbar from './components/Topbar'
 import TransactionModal from './components/TransactionModal'
+import WelcomeModal from './components/WelcomeModal'
 import Dashboard from './views/Dashboard'
 import Transactions from './views/Transactions'
 import Budgets from './views/Budgets'
@@ -20,9 +21,17 @@ const VIEWS = {
   settings: Settings,
 }
 
+const WELCOME_KEY = 'fluxx.welcomed'
+
 export default function App() {
   const { view } = useApp()
   const [ready, setReady] = useState(false)
+  const [showWelcome, setShowWelcome] = useState(() => !localStorage.getItem(WELCOME_KEY))
+
+  const dismissWelcome = () => {
+    localStorage.setItem(WELCOME_KEY, '1')
+    setShowWelcome(false)
+  }
 
   useEffect(() => {
     let done = false
@@ -74,6 +83,7 @@ export default function App() {
         </div>
       </main>
       <TransactionModal />
+      <WelcomeModal open={ready && showWelcome} onClose={dismissWelcome} />
     </div>
   )
 }

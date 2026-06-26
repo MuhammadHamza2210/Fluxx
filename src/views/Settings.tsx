@@ -108,6 +108,15 @@ export default function Settings() {
             </select>
           </div>
         </div>
+        <button
+          onClick={() => {
+            localStorage.removeItem('fluxx.welcomed')
+            window.location.reload()
+          }}
+          className="btn btn-ghost mt-4"
+        >
+          Show welcome guide again
+        </button>
       </div>
 
       {/* Data */}
