@@ -34,6 +34,15 @@ export default function App() {
   }
 
   useEffect(() => {
+    // Ask the browser to keep our IndexedDB data durable so it isn't evicted
+    // between sessions. Without this, some browsers treat storage as "best
+    // effort" and may clear it — which looked like settings/data resetting.
+    if (navigator.storage?.persist) {
+      navigator.storage.persisted().then((persisted) => {
+        if (!persisted) navigator.storage.persist()
+      })
+    }
+
     let done = false
     const finish = () => {
       if (!done) {
