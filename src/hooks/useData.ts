@@ -8,7 +8,11 @@ export const useTransactions = () =>
 export const useBudgets = () => useLiveQuery(() => db.budgets.toArray(), [], [])
 
 export const useGoals = () =>
-  useLiveQuery(() => db.goals.orderBy('createdAt').toArray(), [], [])
+  useLiveQuery(
+    async () => (await db.goals.toArray()).sort((a, b) => a.createdAt - b.createdAt),
+    [],
+    [],
+  )
 
 export const useAccounts = () => useLiveQuery(() => db.accounts.toArray(), [], [])
 
